@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<description:Group xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" name="rdm" version="15.4.0.202401051836">
+  <ownedViewpoints name="RelationalDataModel">
+    <ownedRepresentations xsi:type="description_1:DiagramDescription" name="SchemaDiagram" domainClass="rdm::Schema" enablePopupBars="true">
+      <metamodel href="../../org.example.rdm/model/rdm.ecore#/"/>
+      <defaultLayer name="Default">
+        <edgeMappings name="ForeignKey" sourceMapping="//@ownedViewpoints[name='RelationalDataModel']/@ownedRepresentations[name='SchemaDiagram']/@defaultLayer/@containerMappings[name='Table']" targetMapping="//@ownedViewpoints[name='RelationalDataModel']/@ownedRepresentations[name='SchemaDiagram']/@defaultLayer/@containerMappings[name='Table']" targetFinderExpression="aql:self.referencedKey.columns.table->first()" sourceFinderExpression="aql:self.columns.table->first()" domainClass="rdm::ForeignKey" useDomainElement="true">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            <centerLabelStyleDescription labelSize="12">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <containerMappings name="Table" semanticCandidatesExpression="feature:tables" domainClass="rdm::Table" childrenPresentation="List">
+          <subNodeMappings name="Column" semanticCandidatesExpression="feature:columns" domainClass="rdm::Column">
+            <style xsi:type="style:SquareDescription" labelSize="12" showIcon="false" labelAlignment="LEFT" labelPosition="node" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            </style>
+          </subNodeMappings>
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" roundedCorner="true" backgroundStyle="Liquid">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+          </style>
+        </containerMappings>
+      </defaultLayer>
+    </ownedRepresentations>
+    <ownedJavaExtensions qualifiedClassName="org.example.rdm.design.Services"/>
+  </ownedViewpoints>
+</description:Group>

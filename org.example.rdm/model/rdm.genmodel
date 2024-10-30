@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel"
+    modelDirectory="/org.example.rdm/src-gen" creationIcons="false"
+    editDirectory="/org.example.rdm.edit/src-gen" editorDirectory="/org.example.rdm.editor/src-gen"
+    modelPluginID="org.example.rdm" modelName="Rdm" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    codeFormatting="true" importerID="org.eclipse.emf.importer.ecore" complianceLevel="17.0"
+    copyrightFields="false" operationReflection="true" importOrganizing="true">
+  <foreignModel>rdm.ecore</foreignModel>
+  <testsDirectory xsi:nil="true"/>
+  <genPackages prefix="Rdm" basePackage="org.example" disposableProviderFactory="true"
+      ecorePackage="rdm.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="rdm.ecore#//DeleteAction">
+      <genEnumLiterals ecoreEnumLiteral="rdm.ecore#//DeleteAction/NO_ACTION"/>
+      <genEnumLiterals ecoreEnumLiteral="rdm.ecore#//DeleteAction/CASCADE"/>
+      <genEnumLiterals ecoreEnumLiteral="rdm.ecore#//DeleteAction/RESTRICT"/>
+      <genEnumLiterals ecoreEnumLiteral="rdm.ecore#//DeleteAction/SET_NULL"/>
+      <genEnumLiterals ecoreEnumLiteral="rdm.ecore#//DeleteAction/SET_DEFAULT"/>
+    </genEnums>
+    <genClasses image="false" ecoreClass="rdm.ecore#//NamedElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdm.ecore#//NamedElement/name"/>
+    </genClasses>
+    <genClasses ecoreClass="rdm.ecore#//Database">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rdm.ecore#//Database/schemas"/>
+    </genClasses>
+    <genClasses ecoreClass="rdm.ecore#//Schema">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference rdm.ecore#//Schema/database"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rdm.ecore#//Schema/tables"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rdm.ecore#//Schema/types"/>
+    </genClasses>
+    <genClasses ecoreClass="rdm.ecore#//Table">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference rdm.ecore#//Table/schema"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rdm.ecore#//Table/columns"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rdm.ecore#//Table/primaryKey"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rdm.ecore#//Table/alternateKeys"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rdm.ecore#//Table/foreignKeys"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rdm.ecore#//Table/constraints"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rdm.ecore#//Table/indices"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rdm.ecore#//Table/rules"/>
+    </genClasses>
+    <genClasses ecoreClass="rdm.ecore#//Column">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference rdm.ecore#//Column/table"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdm.ecore#//Column/dataType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdm.ecore#//Column/collation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdm.ecore#//Column/nullable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdm.ecore#//Column/defaultValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdm.ecore#//Column/storedGeneratedValue"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rdm.ecore#//Key">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rdm.ecore#//Key/columns"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rdm.ecore#//CandidateKey"/>
+    <genClasses ecoreClass="rdm.ecore#//PrimaryKey"/>
+    <genClasses ecoreClass="rdm.ecore#//AlternateKey"/>
+    <genClasses ecoreClass="rdm.ecore#//ForeignKey">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference rdm.ecore#//ForeignKey/table"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rdm.ecore#//ForeignKey/referencedKey"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdm.ecore#//ForeignKey/deleteAction"/>
+    </genClasses>
+    <genClasses ecoreClass="rdm.ecore#//Constraint">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference rdm.ecore#//Constraint/table"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdm.ecore#//Constraint/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="rdm.ecore#//Index">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference rdm.ecore#//Index/table"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdm.ecore#//Index/unique"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdm.ecore#//Index/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdm.ecore#//Index/expressions"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="rdm.ecore#//Rule">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference rdm.ecore#//Rule/table"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rdm.ecore#//Rule/statement"/>
+    </genClasses>
+    <genClasses ecoreClass="rdm.ecore#//DeleteRule"/>
+    <genClasses ecoreClass="rdm.ecore#//Enum">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference rdm.ecore#//Enum/schema"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rdm.ecore#//Enum/literals"/>
+    </genClasses>
+    <genClasses ecoreClass="rdm.ecore#//EnumLiteral">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference rdm.ecore#//EnumLiteral/enum"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

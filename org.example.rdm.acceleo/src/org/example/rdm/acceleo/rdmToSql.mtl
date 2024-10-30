@@ -1,0 +1,76 @@
+[comment encoding = UTF-8 /]
+[module rdmToSql('http://www.example.org/rdm')]
+
+[template public rdmToSql(db : Database)]
+[comment @main /]
+[for (schema : Schema | db.schemas)]
+[schema.rdmToSql()/]
+[/for]
+[/template]
+
+[template public rdmToSql(schema : Schema)]
+[comment @main /]
+[file (schema.name.toUpperCamelCase() + '.sql', false, 'UTF-8')]
+CREATE SCHEMA IF NOT EXISTS [schema.name/];
+  [for (enum : Enum | schema.types)]
+
+CREATE TYPE [schema.name/].[enum.name/] AS ENUM (
+  [for (lit : EnumLiteral | enum.literals) separator (',\n  ')]'[lit.name/]'[/for]
+);
+  [/for]
+  [for (table : Table | schema.tables)]
+
+CREATE TABLE [schema.name/].[table.name/] (
+  [for (element : NamedElement | table.getTableElements()) separator (',\n  ')][element.getTableElement()/][/for]
+);
+    [for (index : Index | table.indices->select(unique)) before ('\n')]
+CREATE UNIQUE INDEX [index.name/] ON [index.table.schema.name/].[index.table.name/] USING [index.type/] ([index.expressions->sep(', ')/]);
+    [/for]
+    [for (index : Index | table.indices->select(not unique)) before ('\n')]
+CREATE INDEX [index.name/] ON [index.table.schema.name/].[index.table.name/] USING [index.type/] ([index.expressions->sep(', ')/]);
+    [/for]
+    [for (rule : Rule | table.rules) before ('\n')]
+CREATE RULE [rule.name/] AS ON DELETE TO [schema.name/].[table.name/] DO [rule.statement/];
+    [/for]
+  [/for]
+[/file]
+[/template]
+
+[template public getTableElement(element : NamedElement)]
+TODO
+[/template]
+
+[template public getTableElement(column : Column)]
+[column.name/] [column.dataType/][if (column.collation <> null)] COLLATE "[column.collation
+/]"[/if][if (not column.nullable)] NOT NULL[/if][if (column.defaultValue <> null)] DEFAULT [column.defaultValue
+/][/if][if (column.storedGeneratedValue <> null)] GENERATED ALWAYS AS ([column.storedGeneratedValue/]) STORED[/if]
+[/template]
+
+[template public getTableElement(primaryKey : PrimaryKey)]
+CONSTRAINT [primaryKey.name/] PRIMARY KEY ([primaryKey.columns.name->sep(', ')/])
+[/template]
+
+[template public getTableElement(alternateKey : AlternateKey)]
+CONSTRAINT [alternateKey.name/] UNIQUE ([alternateKey.columns.name->sep(', ')/])
+[/template]
+
+[template public getTableElement(foreignKey : ForeignKey)]
+CONSTRAINT [foreignKey.name/] FOREIGN KEY ([foreignKey.columns.name->sep(', ')
+/]) REFERENCES [foreignKey.referencedKey.columns->first().table.schema.name
+/].[foreignKey.referencedKey.columns->first().table.name/]([foreignKey.referencedKey.columns.name->sep(', ')
+/])[if (foreignKey.deleteAction <> DeleteAction::NO_ACTION)] ON DELETE [foreignKey.deleteAction/][/if]
+[/template]
+
+[template public getTableElement(constraint : Constraint)]
+CONSTRAINT [constraint.name/] CHECK ([constraint.expression/])
+[/template]
+
+[query public getTableElements(table : Table) : OrderedSet(NamedElement) =
+    self.columns
+        ->addAll(table.primaryKey->selectByKind(NamedElement))
+        ->addAll(table.alternateKeys->selectByKind(NamedElement))
+        ->addAll(table.foreignKeys->selectByKind(NamedElement))
+        ->addAll(table.constraints->selectByKind(NamedElement)) /]
+
+[query public toUpperCamelCase(str : String) : String =
+  str.tokenize('_').toUpperFirst()->toString() /]

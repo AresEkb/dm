@@ -1,0 +1,71 @@
+import StringHelpers;
+
+library DmHelpers;
+
+modeltype DM uses 'http://www.example.org/dm';
+
+///////////////////////////////////////////////////////////////////////////////
+// Naming convention
+
+query DM::DataModel::getSchemaName() : String = self.name.tokenize()->sep('_');
+
+query DM::Entity::getTableName() : String = self.name.tokenize()->sep('_');
+
+query DM::Relationship::getTableName() : String =
+	ifnull(self.name, self.ends.name->sep(' ')).tokenize()->sep('_');
+
+query DM::Attribute::getColumnName() : String = self.name.tokenize()->sep('_');
+
+query DM::RelationshipEnd::getColumnName() : String =
+	ifnull(self.name, self.entity.name).tokenize()->sep('_') + '_id';
+
+query DM::Entity::getPrimaryKeyName() : String = self.getTableName() + '_pk';
+
+query DM::Relationship::getPrimaryKeyName() : String = self.getTableName() + '_pk';
+
+query OrderedSet(DM::NamedElement)::getForeignKeyName() : String =
+	self.getForeignKeyPartName().tokenize()->sep('_') + '_fk';
+
+query DM::NamedElement::getForeignKeyPartName() : String = self.name;
+
+query DM::RelationshipEnd::getForeignKeyPartName() : String = ifnull(self.name, self.entity.name);
+
+query DM::Attribute::getConstraintName() : String = self.name.tokenize()->sep('_') + '_check';
+
+///////////////////////////////////////////////////////////////////////////////
+// Relationship kinds
+
+query DM::Relationship::isOneToOne() : Boolean =
+	self.ends->size() = 2 and self.ends->at(1).isOne() and self.ends->at(2).isOne();
+
+query DM::Relationship::isOneToMany() : Boolean =
+	self.ends->size() = 2 and self.ends->at(1).isOne() and self.ends->at(2).isMany();
+
+query DM::Relationship::isOneToAny() : Boolean =
+	self.ends->size() = 2 and self.ends->at(1).isOne();
+
+query DM::Relationship::isManyToOne() : Boolean =
+	self.ends->size() = 2 and self.ends->at(1).isMany() and self.ends->at(2).isOne();
+
+query DM::Relationship::isManyToMany() : Boolean =
+	self.ends->size() = 2 and self.ends->at(1).isMany() and self.ends->at(2).isMany();
+
+query DM::Relationship::isNary() : Boolean =
+	self.ends->size() <> 2;
+
+query DM::RelationshipEnd::isOne() : Boolean =
+	self.upper = 0 or self.upper = 1;
+
+query DM::RelationshipEnd::isMany() : Boolean =
+	self.upper > 1 or self.upper = -1;
+
+///////////////////////////////////////////////////////////////////////////////
+// Attributes
+
+query DM::Entity::getIdentityAttributes() : OrderedSet(DM::Attribute) =
+    self.generals.getIdentityAttributes()->asSequence()
+  	    ->union(self.attributes->select(attr | attr.identity)->asSequence())->asOrderedSet();
+
+query DM::Entity::getActualAttributes() : OrderedSet(DM::Attribute) =
+    self.generals->select(entity | entity.kind = DM::EntityKind::ATTRIBUTE_SET).getActualAttributes()->asSequence()
+  	    ->union(self.attributes->asSequence())->asOrderedSet();

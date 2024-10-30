@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: org.example.dm.xtext
+Bundle-ManifestVersion: 2
+Bundle-Name: org.example.dm.xtext
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: org.example.dm.xtext; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.example.dm,
+ org.eclipse.xtext;visibility:=reexport,
+ org.eclipse.xtext.xbase;visibility:=reexport,
+ org.eclipse.equinox.common;bundle-version="3.16.0",
+ org.eclipse.xtext.xbase.lib;bundle-version="2.35.0";visibility:=reexport,
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
+ org.apache.log4j;visibility:=reexport
+Bundle-RequiredExecutionEnvironment: JavaSE-17
+Export-Package: org.example.dm.xtext.parser.antlr.internal,
+ org.example.dm.xtext.formatting2,
+ org.example.dm.xtext.validation,
+ org.example.dm.xtext.services,
+ org.example.dm.xtext.generator,
+ org.example.dm.xtext,
+ org.example.dm.xtext.serializer,
+ org.example.dm.xtext.parser.antlr,
+ org.example.dm.xtext.scoping
+Import-Package: org.apache.log4j

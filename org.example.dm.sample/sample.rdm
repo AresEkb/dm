@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdm:Schema xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:rdm="http://www.example.org/rdm" xmi:id="_cAWtgJb8Ee-BC-AFARE3mw" name="software_architecture">
+  <tables xmi:id="_cAWtgZb8Ee-BC-AFARE3mw" name="software">
+    <columns xmi:id="_cAWtgpb8Ee-BC-AFARE3mw" name="id" dataType="UUID"/>
+    <columns xmi:id="_cAWtg5b8Ee-BC-AFARE3mw" name="name" dataType="VARCHAR(100)"/>
+    <columns xmi:id="_cAWthJb8Ee-BC-AFARE3mw" name="description" dataType="VARCHAR(1000)" nullable="true"/>
+    <primaryKey xmi:id="_cAWthZb8Ee-BC-AFARE3mw" name="software_pk" columns="_cAWtgpb8Ee-BC-AFARE3mw"/>
+  </tables>
+  <tables xmi:id="_cAWthpb8Ee-BC-AFARE3mw" name="subsystem">
+    <columns xmi:id="_cAWth5b8Ee-BC-AFARE3mw" name="id" dataType="UUID"/>
+    <columns xmi:id="_cAWtiJb8Ee-BC-AFARE3mw" name="name" dataType="VARCHAR(100)"/>
+    <columns xmi:id="_cAWtiZb8Ee-BC-AFARE3mw" name="description" dataType="VARCHAR(1000)" nullable="true"/>
+    <columns xmi:id="_cAWtipb8Ee-BC-AFARE3mw" name="parent_id" dataType="UUID"/>
+    <columns xmi:id="_cAWti5b8Ee-BC-AFARE3mw" name="software_id" dataType="UUID"/>
+    <primaryKey xmi:id="_cAWtjJb8Ee-BC-AFARE3mw" name="subsystem_pk" columns="_cAWth5b8Ee-BC-AFARE3mw"/>
+    <foreignKeys xmi:id="_cAWtjZb8Ee-BC-AFARE3mw" name="parent_fk" columns="_cAWtipb8Ee-BC-AFARE3mw" referencedKey="_cAWtjJb8Ee-BC-AFARE3mw"/>
+    <foreignKeys xmi:id="_cAWtjpb8Ee-BC-AFARE3mw" name="software_fk" columns="_cAWti5b8Ee-BC-AFARE3mw" referencedKey="_cAWthZb8Ee-BC-AFARE3mw"/>
+  </tables>
+  <tables xmi:id="_cAWtj5b8Ee-BC-AFARE3mw" name="requirement">
+    <columns xmi:id="_cAWtkJb8Ee-BC-AFARE3mw" name="id" dataType="UUID"/>
+    <columns xmi:id="_cAWtkZb8Ee-BC-AFARE3mw" name="name" dataType="VARCHAR(100)"/>
+    <columns xmi:id="_cAWtkpb8Ee-BC-AFARE3mw" name="description" dataType="VARCHAR(1000)" nullable="true"/>
+    <columns xmi:id="_cAWtk5b8Ee-BC-AFARE3mw" name="effort" dataType="INTEGER" nullable="true"/>
+    <columns xmi:id="_cAWtlJb8Ee-BC-AFARE3mw" name="priority_id" dataType="UUID"/>
+    <columns xmi:id="_cAWtlZb8Ee-BC-AFARE3mw" name="software_id" dataType="UUID"/>
+    <primaryKey xmi:id="_cAWtlpb8Ee-BC-AFARE3mw" name="requirement_pk" columns="_cAWtkJb8Ee-BC-AFARE3mw"/>
+    <foreignKeys xmi:id="_cAWtl5b8Ee-BC-AFARE3mw" name="priority_fk" columns="_cAWtlJb8Ee-BC-AFARE3mw" referencedKey="_cAWtqJb8Ee-BC-AFARE3mw"/>
+    <foreignKeys xmi:id="_cAWtmJb8Ee-BC-AFARE3mw" name="software_fk" columns="_cAWtlZb8Ee-BC-AFARE3mw" referencedKey="_cAWthZb8Ee-BC-AFARE3mw"/>
+    <constraints xmi:id="_cAWtmZb8Ee-BC-AFARE3mw" name="effort_check" expression="effort >= 0"/>
+  </tables>
+  <tables xmi:id="_cAWtmpb8Ee-BC-AFARE3mw" name="business_requirement">
+    <columns xmi:id="_cAWtm5b8Ee-BC-AFARE3mw" name="id" dataType="UUID"/>
+    <primaryKey xmi:id="_cAWtnJb8Ee-BC-AFARE3mw" name="business_requirement_pk" columns="_cAWtm5b8Ee-BC-AFARE3mw"/>
+    <foreignKeys xmi:id="_cAWtnZb8Ee-BC-AFARE3mw" name="requirement_fk" columns="_cAWtm5b8Ee-BC-AFARE3mw" referencedKey="_cAWtlpb8Ee-BC-AFARE3mw"/>
+  </tables>
+  <tables xmi:id="_cAWtnpb8Ee-BC-AFARE3mw" name="system_requirement">
+    <columns xmi:id="_cAWtn5b8Ee-BC-AFARE3mw" name="id" dataType="UUID"/>
+    <columns xmi:id="_cAWtoJb8Ee-BC-AFARE3mw" name="user_scenario" dataType="TEXT" nullable="true"/>
+    <primaryKey xmi:id="_cAWtoZb8Ee-BC-AFARE3mw" name="system_requirement_pk" columns="_cAWtn5b8Ee-BC-AFARE3mw"/>
+    <foreignKeys xmi:id="_cAWtopb8Ee-BC-AFARE3mw" name="requirement_fk" columns="_cAWtn5b8Ee-BC-AFARE3mw" referencedKey="_cAWtlpb8Ee-BC-AFARE3mw"/>
+  </tables>
+  <tables xmi:id="_cAWto5b8Ee-BC-AFARE3mw" name="priority">
+    <columns xmi:id="_cAWtpJb8Ee-BC-AFARE3mw" name="id" dataType="UUID"/>
+    <columns xmi:id="_cAWtpZb8Ee-BC-AFARE3mw" name="name" dataType="VARCHAR(100)"/>
+    <columns xmi:id="_cAWtppb8Ee-BC-AFARE3mw" name="description" dataType="VARCHAR(1000)" nullable="true"/>
+    <columns xmi:id="_cAWtp5b8Ee-BC-AFARE3mw" name="ordinal" dataType="INTEGER"/>
+    <primaryKey xmi:id="_cAWtqJb8Ee-BC-AFARE3mw" name="priority_pk" columns="_cAWtpJb8Ee-BC-AFARE3mw"/>
+    <constraints xmi:id="_cAWtqZb8Ee-BC-AFARE3mw" name="ordinal_check" expression="ordinal >= 0"/>
+  </tables>
+  <tables xmi:id="_cAWtqpb8Ee-BC-AFARE3mw" name="requirement_implementation">
+    <columns xmi:id="_cAWtq5b8Ee-BC-AFARE3mw" name="system_requirements_id" dataType="UUID"/>
+    <columns xmi:id="_cAWtrJb8Ee-BC-AFARE3mw" name="business_requirements_id" dataType="UUID"/>
+    <primaryKey xmi:id="_cAWtrZb8Ee-BC-AFARE3mw" name="requirement_implementation_pk" columns="_cAWtq5b8Ee-BC-AFARE3mw _cAWtrJb8Ee-BC-AFARE3mw"/>
+    <foreignKeys xmi:id="_cAWtrpb8Ee-BC-AFARE3mw" name="system_requirements_fk" columns="_cAWtq5b8Ee-BC-AFARE3mw" referencedKey="_cAWtoZb8Ee-BC-AFARE3mw"/>
+    <foreignKeys xmi:id="_cAWtr5b8Ee-BC-AFARE3mw" name="business_requirements_fk" columns="_cAWtrJb8Ee-BC-AFARE3mw" referencedKey="_cAWtnJb8Ee-BC-AFARE3mw"/>
+  </tables>
+</rdm:Schema>

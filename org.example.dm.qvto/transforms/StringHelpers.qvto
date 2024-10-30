@@ -1,0 +1,22 @@
+library StringHelpers;
+
+query isEmpty(str : String) : Boolean =
+    str = null or str.oclIsInvalid() or str.size() = 0;
+
+query notEmpty(str : String) : Boolean =
+    not isEmpty(str);
+
+query isBlank(str : String) : Boolean =
+    str = null or str.oclIsInvalid() or str.trim().size() = 0;
+
+query notBlank(str : String) : Boolean =
+    not isBlank(str);
+
+query ifnull(arg1 : String, arg2 : String) : String =
+    if notEmpty(arg1) then arg1 else arg2 endif;
+
+query Sequence(String)::sep(separator : String) : String =
+    self->iterate(str; res : String = '' | if res = '' then str else res + separator + str endif);
+
+query Real::toString(integer : Boolean) : String =
+	if integer then self.round().toString() else self.toString() endif;

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated dm -->
+      <package
+            uri="http://www.example.org/dm"
+            class="org.example.dm.DmPackage"
+            genModel="model/dm.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="dm"
+            class="org.example.dm.util.DmResourceFactoryImpl" />
+   </extension>
+
+</plugin>

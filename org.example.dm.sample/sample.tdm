@@ -1,0 +1,158 @@
+DataModel 'software architecture' {
+	@description('архитектура программного продукта')
+	@locales(ru)
+	@localization ru()
+
+	Entity 'persistent entity' [ATTRIBUTE_SET] {
+		@localization ru('базовая сущность')
+
+		'id' 'UUID' 1..1 [id] {
+			@localization ru('идентификатор')
+		}
+	}
+
+	Entity 'named entity' [ATTRIBUTE_SET] :: 'persistent entity' {
+		@localization ru('именованная сущность')
+
+		'name' 'string100' 1..1 {
+			@localization ru('название')
+		}
+
+		'description' 'string1000' 0..1 {
+			@localization ru('описание')
+		}
+	}
+
+	Entity 'software' :: 'named entity' {
+		@localization ru('программный продукт')
+	}
+
+	Entity 'subsystem' :: 'named entity' {
+		@localization ru('подсистема')
+	}
+
+	Entity 'requirement' [ABSTRACT_ENTITY] :: 'named entity' {
+		@localization ru('требование')
+
+		'effort' 'man-hour' 0..1 {
+			@localization ru('трудозатраты')
+		}
+	}
+
+	Entity 'business requirement' :: 'requirement' {
+		@localization ru('бизнес-требование')
+	}
+
+	Entity 'system requirement' :: 'requirement' {
+		@localization ru('системное требование')
+
+		'user scenario' 'text' 0..1 {
+			@localization ru('пользовательский сценарий')
+		}
+	}
+
+	Entity 'priority' [REFERENCE_DATA] :: 'named entity' {
+		@localization ru('приоритет')
+
+		'ordinal' 'ordinal' 1..1 {
+			@localization ru('порядковый номер')
+		}
+	}
+
+	Relationship [COMPOSITION] {
+		@localization ru()
+
+		'software' 0..0 {
+			@localization ru()
+		}
+
+		'subsystem' 0..0 {
+			@localization ru()
+		}
+	}
+
+	Relationship [COMPOSITION] {
+		@localization ru()
+
+		'software' 0..0 {
+			@localization ru()
+		}
+
+		'requirement' 0..0 {
+			@localization ru()
+		}
+	}
+
+	Relationship   [COMPOSITION] {
+		@localization ru()
+
+		'parent' 'subsystem' 0..1 {
+			@localization ru()
+		}
+
+		'children' 'subsystem' 0..* {
+			@localization ru()
+		}
+	}
+
+	Relationship 'requirement implementation' {
+		@localization ru()
+
+		'' 'system requirement' 0..* {
+			@localization ru()
+		}
+
+		'business requirement' 0..* {
+			@localization ru()
+		}
+	}
+
+	Relationship {
+		@localization ru()
+
+		'' 'requirement' 0..* {
+			@localization ru()
+		}
+
+		'priority' 'priority' 0..1 {
+			@localization ru()
+		}
+	}
+
+	BooleanType 'boolean' {
+		@localization ru('лоигческое значение')
+	}
+
+	UuidType 'UUID' {
+		@localization ru('UUID')
+	}
+
+	NumericType 'ordinal' {
+		@localization ru('порядковый номер')
+		size 4
+		fractionDigits 0
+		minInclusive 0.0
+	}
+
+	NumericType 'man-hour' {
+		@localization ru('человеко-час')
+		size 4
+		fractionDigits 0
+		minInclusive 0.0
+		measurementUnit 'человеко-час'
+	}
+
+	StringType 'string100' {
+		@localization ru('строка (100)')
+		maxLength 100
+	}
+
+	StringType 'string1000' {
+		@localization ru('строка (1000)')
+		maxLength 1000
+	}
+
+	StringType 'text' {
+		@localization ru('текст')
+	}
+}

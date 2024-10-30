@@ -1,0 +1,150 @@
+grammar org.example.dm.xtext.TextualDataModel with org.eclipse.xtext.common.Terminals
+
+import "http://www.example.org/dm"
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+DataModel returns DataModel:
+    'DataModel'
+    name=ElementName
+    ('{'
+        ('@description' '(' description=Text ')')?
+        ('@locales' '(' locales+=ID* ')' )?
+        localizations+=Localization*
+        entities+=Entity*
+        relationships+=Relationship*
+        dataTypes+=DataType*
+    '}')?;
+
+Entity returns Entity:
+    'Entity'
+    name=ElementName
+    ('[' kind=EntityKind ']')?
+    ('::' generals+=[Entity|ElementName]+)?
+    ('{'
+        ('@description' '(' description=Text ')')?
+        localizations+=Localization*
+        attributes+=Attribute*
+    '}')?;
+
+enum EntityKind returns EntityKind:
+    MASTER_DATA = 'MASTER_DATA' | REFERENCE_DATA = 'REFERENCE_DATA' | ABSTRACT_ENTITY = 'ABSTRACT_ENTITY' | ATTRIBUTE_SET = 'ATTRIBUTE_SET';
+
+Attribute returns Attribute:
+    name=ElementName
+    dataType=[DataType|ElementName]
+    lower=INT '..' upper=UnlimitedNatural
+    (identity?='[id]')?
+    ('defaultValue' '(' defaultValue=Text ')')?
+    ('{'
+        ('@description' '(' description=Text ')')?
+        localizations+=Localization*
+    '}')?;
+
+Relationship returns Relationship:
+    {Relationship}
+    'Relationship'
+    name=ElementName?
+    ('[' kind=RelationshipKind ']')?
+    ('{'
+        ('@description' '(' description=Text ')')?
+        localizations+=Localization*
+        ends+=RelationshipEnd*
+    '}')?;
+
+enum RelationshipKind returns RelationshipKind:
+    ASSOCIATION = 'ASSOCIATION' | COMPOSITION = 'COMPOSITION' | AGGREGATION = 'AGGREGATION';
+
+RelationshipEnd returns RelationshipEnd:
+    name=ElementName?
+    entity=[Entity|ElementName]
+    lower=INT '..' upper=UnlimitedNatural
+    ('{'
+        ('@description' '(' description=Text ')')?
+        localizations+=Localization*
+    '}')?;
+
+DataType returns DataType:
+    BooleanType | StringType | NumericType | DateType | DateTimeType | UuidType;
+
+BooleanType returns BooleanType:
+    'BooleanType'
+    name=ElementName
+    ('{'
+        ('@description' '(' description=Text ')')?
+        localizations+=Localization*
+    '}')?;
+
+StringType returns StringType:
+    'StringType'
+    name=ElementName
+    ('{'
+        ('@description' '(' description=Text ')')?
+        localizations+=Localization*
+        ('length' length=INT)?
+        ('minLength' minLength=INT)?
+        ('maxLength' maxLength=INT)?
+        ('pattern' pattern=Text)?
+    '}')?;
+
+NumericType returns NumericType:
+    'NumericType'
+    name=ElementName
+    ('{'
+        ('@description' '(' description=Text ')')?
+        localizations+=Localization*
+        ('size' size=PositiveShort)?
+        ('totalDigits' totalDigits=PositiveShort)?
+        ('fractionDigits' fractionDigits=PositiveShort)?
+        ('minInclusive' minInclusive=Double)?
+        ('minExclusive' minExclusive=Double)?
+        ('maxInclusive' maxInclusive=Double)?
+        ('maxExclusive' maxExclusive=Double)?
+        ('measurementUnit' measurementUnit=Text)?
+    '}')?;
+
+DateType returns DateType:
+    'DateType'
+    name=ElementName
+    ('{'
+        ('@description' '(' description=Text ')')?
+        localizations+=Localization*
+    '}')?;
+
+DateTimeType returns DateTimeType:
+    'DateTimeType'
+    name=ElementName
+    ('{'
+        ('@description' '(' description=Text ')')?
+        localizations+=Localization*
+    '}')?;
+
+UuidType returns UuidType:
+    'UuidType'
+    name=ElementName
+    ('{'
+        ('@description' '(' description=Text ')')?
+        localizations+=Localization*
+    '}')?;
+
+Localization returns Localization:
+    '@localization'
+    locale=ID
+    '('
+        (name=Text
+        description=Text?)?
+    ')';
+
+ElementName returns ecore::EString:
+    STRING;
+
+Text returns ecore::EString:
+    STRING;
+
+UnlimitedNatural returns ecore::EInt:
+    INT | '*';
+
+PositiveShort returns ecore::EShortObject:
+    INT;
+
+Double returns ecore::EDoubleObject:
+    '-'? INT? '.' INT (('E'|'e') '-'? INT)?;

@@ -1,0 +1,86 @@
+[comment encoding = UTF-8 /]
+[module dmToMarkdown('http://www.example.org/dm')]
+
+[import org::example::dm::acceleo::helpers /]
+
+[template public dmToMarkdown(dataModel : DataModel)]
+[comment @main/]
+[file (dataModel.name.toUpperCamelCase() + '.md', false, 'UTF-8')]
+# Описание модели данных «[dataModel.getRuName().toUpperFirst()/]»
+
+<style>
+table {
+  width: 100%;
+}
+
+.classTitle {
+  font-weight: normal !important;
+}
+line.divider {
+  stroke: transparent !important;
+}
+
+.attributeSet rect {
+  fill: white !important;
+  stroke: black !important;
+  stroke-dasharray: 5;
+}
+
+.abstractEntity rect {
+  fill: white !important;
+  stroke: black !important;
+}
+
+.masterData rect {
+  fill: lightgreen !important;
+  stroke: black !important;
+}
+
+.referenceData rect {
+  fill: lightblue !important;
+  stroke: black !important;
+}
+</style>
+
+```mermaid
+classDiagram
+[for (entity : Entity | dataModel.entities)]
+class `[entity.getClassName()/]` ::: [entity.getClassKind()/]
+[/for]
+[for (entity : Entity | dataModel.entities)]
+  [for (general : Entity | entity.generals)]
+`[general.getClassName()/]` <|-- `[entity.getClassName()/]`
+  [/for]
+[/for]
+[for (rel : Relationship | dataModel.relationships)]
+`[rel.ends.entity->at(1).getClassName()/]` [rel.getEdge()/] `[rel.ends.entity->at(2).getClassName()/]`
+[/for]
+```
+
+## Типы данных
+
+| Тип данных | Название (англ.) |
+| ---------- | ---------------- |
+[for (dataType : DataType | dataModel.dataTypes)]
+| [dataType.getRuName().toUpperFirst()/] | [dataType.name/] |
+[/for]
+[for (entity : Entity | dataModel.entities)]
+
+## [entity.getClassName()/] ([entity.name/])
+
+| Атрибут или ссылка | Название (англ.) | Тип данных | Мн. |
+| ------------------ | ---------------- | ---------- | :-: |
+  [for (attr : Attribute | entity.getAllAttributes())]
+| [attr.getPropertyName()/] | [attr.name/] | ['['/][attr.dataType.getRuName()/][']'/](#типы-данных) | [attr.getMultiplicity()/] |
+  [/for]
+  [for (end : RelationshipEnd | entity.getAllOppositeRelationshipEnds()->select(end | notEmpty(end.name))->sortedBy(getPropertyName()))]
+| [end.getPropertyName()/] | [end.name/] | [end.entity.getLinkToEntity()/] | [end.getMultiplicity()/] |
+  [/for]
+[/for]
+[/file]
+[/template]
+
+[query public getEdge(rel : Relationship) : OclAny =
+  if rel.kind = RelationshipKind::COMPOSITION then '*--'
+  else if rel.kind = RelationshipKind::AGGREGATION then 'o--'
+  else '--' endif endif /]

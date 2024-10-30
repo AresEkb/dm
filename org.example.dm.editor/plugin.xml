@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated dm -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="org.example.dm.presentation.DmModelWizardID"
+            name="%_UI_DmModelWizard_label"
+            class="org.example.dm.presentation.DmModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/DmModelFile.gif">
+         <description>%_UI_DmModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated dm -->
+      <editor
+            id="org.example.dm.presentation.DmEditorID"
+            name="%_UI_DmEditor_label"
+            icon="icons/full/obj16/DmModelFile.gif"
+            extensions="dm"
+            class="org.example.dm.presentation.DmEditor"
+            contributorClass="org.example.dm.presentation.DmActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

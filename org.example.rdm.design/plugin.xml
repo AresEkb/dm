@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+  <extension point="org.eclipse.sirius.componentization">
+    <component class="org.example.rdm.design.Activator"
+               id="org.example.rdm.design"
+	       name="rdm">
+    </component>
+  </extension>
+</plugin>

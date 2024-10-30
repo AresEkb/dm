@@ -1,0 +1,21 @@
+# Build
+bin
+target
+xtend-gen
+
+# Java
+.apt_generated
+.apt_generated_tests
+
+# Eclise
+/.metadata
+/.sonarlint
+
+# IDEA
+.idea
+*.iml
+
+# Misc
+.temp*
+.DS_Store
+.scannerwork

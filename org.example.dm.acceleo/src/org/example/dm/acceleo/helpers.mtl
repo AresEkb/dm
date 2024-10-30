@@ -1,0 +1,57 @@
+[comment encoding = UTF-8 /]
+[module helpers('http://www.example.org/dm')/]
+
+[query public isEmpty(str : String) : Boolean =
+  str = null or str.size() = 0 /]
+
+[query public notEmpty(str : String) : Boolean = not isEmpty(str) /]
+
+
+[query public toLowerCamelCase(str : String) : String =
+  str.tokenize().toUpperFirst()->toString().toLowerFirst() /]
+
+[query public toUpperCamelCase(str : String) : String =
+  str.tokenize().toUpperFirst()->toString() /]
+
+
+[query public escapeLink(str : String) : String =
+  str.toLowerCase().replaceAll('[^a-zа-яё -]', '').replaceAll(' ', '-') /]
+
+
+[query public getRuName(element : NamedElement) : String =
+  if element.localizations->exists(loc | loc.locale = 'ru')
+  then element.localizations->any(loc | loc.locale = 'ru').name
+  else element.name endif /]
+
+
+[query public getClassName(entity : Entity) : String =
+  entity.getRuName().toUpperFirst() /]
+
+[query public getClassKind(entity : Entity) : String =
+  entity.kind.toString().toLowerCase().replaceAll('_', ' ').toLowerCamelCase() /]
+
+[query public getPropertyName(property : NamedElement) : String =
+  if property.getRuName() <> null then property.getRuName().toUpperFirst() else '' endif /]
+
+
+[query public getLinkToEntity(entity : Entity) : String =
+  '[' + entity.getRuName() + '](#' + (entity.getClassName() + '-' + entity.name).escapeLink() + ')' /]
+
+
+[query public getMultiplicity(attr : Attribute) : String =
+  if attr.lower = attr.upper then attr.lower
+  else attr.lower + '..' + if attr.upper = -1 then '*' else attr.upper endif endif /]
+
+[query public getMultiplicity(end : RelationshipEnd) : String =
+  if end.lower = end.upper then end.lower
+  else end.lower + '..' + if end.upper = -1 then '*' else end.upper endif endif /]
+
+
+[query public getAllAttributes(entity : Entity) : OrderedSet(Attribute) =
+  entity.generals.getAllAttributes()->addAll(entity.attributes)->asOrderedSet() /]
+
+[query public getAllOppositeRelationshipEnds(entity : Entity) : Set(RelationshipEnd) =
+  let selfAndAllGenerals : Set(Entity) = self->closure(generals)->including(self) in
+  let allBinaryRelationships : OrderedSet(Relationship) = entity.dataModel.relationships->select(rel | rel.ends->size() = 2) in
+  allBinaryRelationships->select(rel | selfAndAllGenerals->includes(rel.ends->at(1).entity))->collect(rel | rel.ends->at(2))->union(
+    allBinaryRelationships->select(rel | selfAndAllGenerals->includes(rel.ends->at(2).entity))->collect(rel | rel.ends->at(1)))->asSet() /]

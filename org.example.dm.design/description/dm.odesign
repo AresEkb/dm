@@ -1,0 +1,682 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<description:Group xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:description_2="http://www.eclipse.org/sirius/table/description/1.1.0" xmlns:properties="http://www.eclipse.org/sirius/properties/1.0.0" xmlns:properties-ext-widgets-reference="http://www.eclipse.org/sirius/properties/1.0.0/ext/widgets/reference" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:tool="http://www.eclipse.org/sirius/diagram/description/tool/1.1.0" xmlns:tool_1="http://www.eclipse.org/sirius/description/tool/1.1.0" name="dm" version="15.4.0.202401051836">
+  <ownedViewpoints name="DataModel">
+    <ownedRepresentations xsi:type="description_1:DiagramDescription" name="DataModelDiagram" titleExpression="feature:name" domainClass="dm::DataModel" enablePopupBars="true">
+      <metamodel href="../../org.example.dm/model/dm.ecore#/"/>
+      <defaultLayer name="Default">
+        <nodeMappings name="Relationship" preconditionExpression="aql:self.ends->select(end | end.entity &lt;> null)->size() &lt;> 2" semanticCandidatesExpression="feature:relationships" domainClass="dm::Relationship">
+          <style xsi:type="style:LozengeNodeDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="aql:self.getLabel()" labelPosition="node" resizeKind="NSEW">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+          </style>
+        </nodeMappings>
+        <nodeMappings name="DataType" semanticCandidatesExpression="feature:dataTypes" domainClass="dm::DataType">
+          <style xsi:type="style:BundledImageDescription" labelSize="12" showIcon="false" labelExpression="aql:self.getLabel()" sizeComputationExpression="7" labelPosition="node" resizeKind="NSEW">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+          </style>
+        </nodeMappings>
+        <edgeMappings name="BinaryRelationship" preconditionExpression="aql:self.ends->select(end | end.entity &lt;> null)->size() = 2" labelDirectEdit="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='EditLabel']" semanticCandidatesExpression="feature:relationships" sourceMapping="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@containerMappings[name='Entity']" targetMapping="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@containerMappings[name='Entity']" targetFinderExpression="aql:self.ends->at(2).entity" sourceFinderExpression="aql:self.ends->at(1).entity" domainClass="dm::Relationship" useDomainElement="true" reconnections="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='ReconnectRelationshipSource'] //@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='ReconnectRelationshipTarget']">
+          <style targetArrow="NoDecoration" sizeComputationExpression="2" routingStyle="manhattan">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            <beginLabelStyleDescription labelSize="12" showIcon="false" labelExpression="aql:self.ends->at(1).getLabel()">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </beginLabelStyleDescription>
+            <endLabelStyleDescription labelSize="12" showIcon="false" labelExpression="aql:self.ends->at(2).getLabel()">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </endLabelStyleDescription>
+          </style>
+          <conditionnalStyles predicateExpression="aql:self.kind = dm::RelationshipKind::COMPOSITION">
+            <style sourceArrow="FillDiamond" targetArrow="NoDecoration" sizeComputationExpression="2" routingStyle="manhattan">
+              <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+              <beginLabelStyleDescription labelSize="12" showIcon="false" labelExpression="aql:self.ends->at(1).getLabel()">
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              </beginLabelStyleDescription>
+              <endLabelStyleDescription labelSize="12" showIcon="false" labelExpression="aql:self.ends->at(2).getLabel()">
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              </endLabelStyleDescription>
+            </style>
+          </conditionnalStyles>
+          <conditionnalStyles predicateExpression="aql:self.kind = dm::RelationshipKind::AGGREGATION">
+            <style sourceArrow="Diamond" targetArrow="NoDecoration" sizeComputationExpression="2" routingStyle="manhattan">
+              <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+              <beginLabelStyleDescription labelSize="12" showIcon="false" labelExpression="aql:self.ends->at(1).getLabel()">
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              </beginLabelStyleDescription>
+              <endLabelStyleDescription labelSize="12" showIcon="false" labelExpression="aql:self.ends->at(2).getLabel()">
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              </endLabelStyleDescription>
+            </style>
+          </conditionnalStyles>
+          <conditionnalStyles predicateExpression="aql:self.kind = dm::RelationshipKind::ASSOCIATION and (self.ends->at(2).upper = 0 or self.ends->at(2).upper = 1)">
+            <style sizeComputationExpression="2" routingStyle="manhattan">
+              <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+              <beginLabelStyleDescription labelSize="12" showIcon="false" labelExpression="aql:self.ends->at(1).getLabel()">
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              </beginLabelStyleDescription>
+              <endLabelStyleDescription labelSize="12" showIcon="false" labelExpression="aql:self.ends->at(2).getLabel()">
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              </endLabelStyleDescription>
+            </style>
+          </conditionnalStyles>
+        </edgeMappings>
+        <edgeMappings name="RelationshipEnd" labelDirectEdit="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='EditLabel']" sourceMapping="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@nodeMappings[name='Relationship']" targetMapping="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@containerMappings[name='Entity']" targetFinderExpression="feature:entity" sourceFinderExpression="feature:eContainer" domainClass="dm::RelationshipEnd" useDomainElement="true" reconnections="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='ReconnectRelationshipEndSource'] //@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='ReconnectRelationshipEndTarget']">
+          <style targetArrow="NoDecoration" sizeComputationExpression="2" routingStyle="manhattan" endsCentering="Source">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            <centerLabelStyleDescription labelSize="12" showIcon="false" labelExpression="aql:self.getLabel()">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+          <conditionnalStyles predicateExpression="aql:self.relationship.ends->indexOf(self) = 1 and self.relationship.kind = dm::RelationshipKind::COMPOSITION">
+            <style targetArrow="FillDiamond" sizeComputationExpression="2">
+              <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+              <centerLabelStyleDescription labelSize="12">
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              </centerLabelStyleDescription>
+            </style>
+          </conditionnalStyles>
+          <conditionnalStyles predicateExpression="aql:self.relationship.ends->indexOf(self) = 1 and self.relationship.kind = dm::RelationshipKind::AGGREGATION">
+            <style targetArrow="Diamond" sizeComputationExpression="2">
+              <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+              <centerLabelStyleDescription labelSize="12">
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              </centerLabelStyleDescription>
+            </style>
+          </conditionnalStyles>
+        </edgeMappings>
+        <edgeMappings name="Generalization" deletionDescription="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='DeleteGeneralization']" sourceMapping="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@containerMappings[name='Entity']" targetMapping="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@containerMappings[name='Entity']" targetFinderExpression="feature:generals" reconnections="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='ReconnectGeneralizationSource'] //@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='ReconnectGeneralizationTarget']">
+          <style targetArrow="InputClosedArrow" sizeComputationExpression="2" routingStyle="manhattan" endsCentering="Both">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+          </style>
+        </edgeMappings>
+        <containerMappings name="Entity" labelDirectEdit="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='EditLabel']" semanticCandidatesExpression="feature:entities" domainClass="dm::Entity" dropDescriptions="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='DropAttribute']" childrenPresentation="List">
+          <subNodeMappings name="Attribute" labelDirectEdit="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='EditLabel']" semanticCandidatesExpression="feature:attributes" domainClass="dm::Attribute">
+            <style xsi:type="style:SquareDescription" labelSize="12" showIcon="false" labelExpression="aql:if self.name &lt;> null and self.name.size() > 0 then self.getLabel() else '???' endif" labelAlignment="LEFT" labelPosition="node" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            </style>
+          </subNodeMappings>
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="aql:self.getLabel()" roundedCorner="true" backgroundStyle="Liquid">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_green']"/>
+            <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+          </style>
+          <conditionnalStyles predicateExpression="aql:self.kind = dm::EntityKind::REFERENCE_DATA">
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="aql:self.getLabel()" roundedCorner="true" backgroundStyle="Liquid">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            </style>
+          </conditionnalStyles>
+          <conditionnalStyles predicateExpression="aql:self.kind = dm::EntityKind::ABSTRACT_ENTITY">
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="aql:self.getLabel()" roundedCorner="true" backgroundStyle="Liquid">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            </style>
+          </conditionnalStyles>
+          <conditionnalStyles predicateExpression="aql:self.kind = dm::EntityKind::ATTRIBUTE_SET">
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" borderLineStyle="dash" labelSize="12" showIcon="false" labelExpression="aql:self.getLabel()" roundedCorner="true" backgroundStyle="Liquid">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelFormat>italic</labelFormat>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            </style>
+          </conditionnalStyles>
+        </containerMappings>
+        <toolSections name="Tools">
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Entity" containerMappings="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@containerMappings[name='Entity']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:CreateInstance" typeName="dm::Entity" referenceName="entities">
+                <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Attribute" nodeMappings="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@containerMappings[name='Entity']/@subNodeMappings[name='Attribute']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:CreateInstance" typeName="dm::Attribute" referenceName="attributes">
+                <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="Generalization" edgeMappings="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@edgeMappings[name='Generalization']" iconPath="/org.example.dm.edit/icons/full/obj16/Generalization.gif">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:source">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="generals" valueExpression="var:target"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="Association" edgeMappings="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@edgeMappings[name='BinaryRelationship']" iconPath="/org.example.dm.edit/icons/full/obj16/Association.gif">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:source.eContainer(dm::DataModel)">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="dm::Relationship" referenceName="relationships">
+                  <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="dm::RelationshipEnd" referenceName="ends">
+                    <subModelOperations xsi:type="tool_1:SetValue" featureName="entity" valueExpression="var:source"/>
+                    <subModelOperations xsi:type="tool_1:SetValue" featureName="upper" valueExpression="-1"/>
+                    <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+                  </subModelOperations>
+                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="dm::RelationshipEnd" referenceName="ends">
+                    <subModelOperations xsi:type="tool_1:SetValue" featureName="entity" valueExpression="var:target"/>
+                    <subModelOperations xsi:type="tool_1:SetValue" featureName="upper" valueExpression="-1"/>
+                    <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+                  </subModelOperations>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="Composition" edgeMappings="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@edgeMappings[name='BinaryRelationship']" iconPath="/org.example.dm.edit/icons/full/obj16/Composition.gif">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:source.eContainer(dm::DataModel)">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="dm::Relationship" referenceName="relationships">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="kind" valueExpression="aql:dm::RelationshipKind::COMPOSITION"/>
+                  <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="dm::RelationshipEnd" referenceName="ends">
+                    <subModelOperations xsi:type="tool_1:SetValue" featureName="entity" valueExpression="var:source"/>
+                    <subModelOperations xsi:type="tool_1:SetValue" featureName="lower" valueExpression="1"/>
+                    <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+                  </subModelOperations>
+                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="dm::RelationshipEnd" referenceName="ends">
+                    <subModelOperations xsi:type="tool_1:SetValue" featureName="entity" valueExpression="var:target"/>
+                    <subModelOperations xsi:type="tool_1:SetValue" featureName="upper" valueExpression="-1"/>
+                    <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+                  </subModelOperations>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="Aggregation" edgeMappings="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@edgeMappings[name='BinaryRelationship']" iconPath="/org.example.dm.edit/icons/full/obj16/Aggregation.gif">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:source.eContainer(dm::DataModel)">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="dm::Relationship" referenceName="relationships">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="kind" valueExpression="aql:dm::RelationshipKind::AGGREGATION"/>
+                  <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="dm::RelationshipEnd" referenceName="ends">
+                    <subModelOperations xsi:type="tool_1:SetValue" featureName="entity" valueExpression="var:source"/>
+                    <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+                  </subModelOperations>
+                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="dm::RelationshipEnd" referenceName="ends">
+                    <subModelOperations xsi:type="tool_1:SetValue" featureName="entity" valueExpression="var:target"/>
+                    <subModelOperations xsi:type="tool_1:SetValue" featureName="upper" valueExpression="-1"/>
+                    <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+                  </subModelOperations>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="Reference" edgeMappings="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@edgeMappings[name='BinaryRelationship']" iconPath="/org.example.dm.edit/icons/full/obj16/Reference.gif">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:source.eContainer(dm::DataModel)">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="dm::Relationship" referenceName="relationships">
+                  <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="dm::RelationshipEnd" referenceName="ends">
+                    <subModelOperations xsi:type="tool_1:SetValue" featureName="entity" valueExpression="var:source"/>
+                    <subModelOperations xsi:type="tool_1:SetValue" featureName="upper" valueExpression="-1"/>
+                    <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+                  </subModelOperations>
+                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="dm::RelationshipEnd" referenceName="ends">
+                    <subModelOperations xsi:type="tool_1:SetValue" featureName="entity" valueExpression="var:target"/>
+                    <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+                  </subModelOperations>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Relationship" nodeMappings="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@nodeMappings[name='Relationship']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:CreateInstance" typeName="dm::Relationship" referenceName="relationships">
+                <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="Relationship End" edgeMappings="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@edgeMappings[name='RelationshipEnd']" extraSourceMappings="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@edgeMappings[name='BinaryRelationship']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:source">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="dm::RelationshipEnd" referenceName="ends">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="entity" valueExpression="var:target"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="upper" valueExpression="-1"/>
+                  <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Boolean Type" nodeMappings="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@nodeMappings[name='DataType']" iconPath="/org.example.dm.edit/icons/full/obj16/BooleanType.gif">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:CreateInstance" typeName="dm::BooleanType" referenceName="dataTypes">
+                <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="String Type" nodeMappings="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@nodeMappings[name='DataType']" iconPath="/org.example.dm.edit/icons/full/obj16/StringType.gif">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:CreateInstance" typeName="dm::StringType" referenceName="dataTypes">
+                <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Numeric Type" nodeMappings="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@nodeMappings[name='DataType']" iconPath="/org.example.dm.edit/icons/full/obj16/NumericType.gif">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:CreateInstance" typeName="dm::NumericType" referenceName="dataTypes">
+                <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Date Type" nodeMappings="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@nodeMappings[name='DataType']" iconPath="/org.example.dm.edit/icons/full/obj16/DateType.gif">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:CreateInstance" typeName="dm::DateType" referenceName="dataTypes">
+                <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Date Time Type" nodeMappings="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@nodeMappings[name='DataType']" iconPath="/org.example.dm.edit/icons/full/obj16/DateTimeType.gif">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:CreateInstance" typeName="dm::DateTimeType" referenceName="dataTypes">
+                <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="UUID Type" nodeMappings="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@nodeMappings[name='DataType']" iconPath="/org.example.dm.edit/icons/full/obj16/UuidType.gif">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:CreateInstance" typeName="dm::UuidType" referenceName="dataTypes">
+                <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:DirectEditLabel" name="EditLabel">
+            <mask mask="{0}"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="var:arg0"/>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ContainerDropDescription" name="DropAttribute" mappings="//@ownedViewpoints[name='DataModel']/@ownedRepresentations[name='DataModelDiagram']/@defaultLayer/@containerMappings[name='Entity']/@subNodeMappings[name='Attribute']" dragSource="BOTH">
+            <oldContainer name="oldSemanticContainer"/>
+            <newContainer name="newSemanticContainer"/>
+            <element name="element"/>
+            <newViewContainer name="newContainerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:newSemanticContainer">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="attributes" valueExpression="var:element"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ReconnectEdgeDescription" name="ReconnectGeneralizationSource" reconnectionKind="RECONNECT_SOURCE">
+            <source name="source"/>
+            <target name="target"/>
+            <sourceView name="sourceView"/>
+            <targetView name="targetView"/>
+            <element name="element"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:source">
+                <subModelOperations xsi:type="tool_1:Unset" featureName="generals" elementExpression="aql:otherEnd.target"/>
+                <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:target">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="generals" valueExpression="aql:otherEnd.target"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+            <edgeView name="edgeView"/>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ReconnectEdgeDescription" name="ReconnectGeneralizationTarget">
+            <source name="source"/>
+            <target name="target"/>
+            <sourceView name="sourceView"/>
+            <targetView name="targetView"/>
+            <element name="element"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:otherEnd.target">
+                <subModelOperations xsi:type="tool_1:Unset" featureName="generals" elementExpression="var:source"/>
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="generals" valueExpression="var:target"/>
+              </firstModelOperations>
+            </initialOperation>
+            <edgeView name="edgeView"/>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ReconnectEdgeDescription" name="ReconnectRelationshipSource" reconnectionKind="RECONNECT_SOURCE">
+            <source name="source"/>
+            <target name="target"/>
+            <sourceView name="sourceView"/>
+            <targetView name="targetView"/>
+            <element name="element"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:self.ends->at(0)">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="entitiy" valueExpression="var:target"/>
+              </firstModelOperations>
+            </initialOperation>
+            <edgeView name="edgeView"/>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ReconnectEdgeDescription" name="ReconnectRelationshipTarget">
+            <source name="source"/>
+            <target name="target"/>
+            <sourceView name="sourceView"/>
+            <targetView name="targetView"/>
+            <element name="element"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:self.ends->at(1)">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="entitiy" valueExpression="var:target"/>
+              </firstModelOperations>
+            </initialOperation>
+            <edgeView name="edgeView"/>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ReconnectEdgeDescription" name="ReconnectRelationshipEndSource" reconnectionKind="RECONNECT_SOURCE">
+            <source name="source"/>
+            <target name="target"/>
+            <sourceView name="sourceView"/>
+            <targetView name="targetView"/>
+            <element name="element"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:MoveElement" newContainerExpression="var:target" featureName="ends"/>
+            </initialOperation>
+            <edgeView name="edgeView"/>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ReconnectEdgeDescription" name="ReconnectRelationshipEndTarget">
+            <source name="source"/>
+            <target name="target"/>
+            <sourceView name="sourceView"/>
+            <targetView name="targetView"/>
+            <element name="element"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:SetValue" featureName="entity" valueExpression="var:target"/>
+            </initialOperation>
+            <edgeView name="edgeView"/>
+          </ownedTools>
+          <ownedTools xsi:type="tool:DeleteElementDescription" name="DeleteGeneralization">
+            <element name="element"/>
+            <elementView name="elementView"/>
+            <containerView name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:elementView.sourceNode.target">
+                <subModelOperations xsi:type="tool_1:Unset" featureName="generals" elementExpression="aql:elementView.targetNode.target"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
+      </defaultLayer>
+    </ownedRepresentations>
+    <ownedRepresentations xsi:type="description_2:EditionTableDescription" name="DataTypeTable" domainClass="dm::DataModel">
+      <metamodel href="../../org.example.dm/model/dm.ecore#/"/>
+      <ownedLineMappings name="DataType" domainClass="dm::DataType" semanticCandidatesExpression="feature:dataTypes">
+        <ownedSubLines name="Localization" domainClass="dm::Localization" semanticCandidatesExpression="feature:localizations"/>
+      </ownedLineMappings>
+      <ownedCreateLine name="BooleanType" label="Создать логический тип">
+        <variables name="root" documentation="The semantic root element of the table."/>
+        <variables name="element" documentation="The semantic currently edited element."/>
+        <variables name="container" documentation="The semantic element corresponding to the view container."/>
+        <firstModelOperation xsi:type="tool_1:CreateInstance" typeName="dm::BooleanType" referenceName="dataTypes">
+          <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+        </firstModelOperation>
+      </ownedCreateLine>
+      <ownedCreateLine name="StringType" label="Создать строковый тип">
+        <variables name="root" documentation="The semantic root element of the table."/>
+        <variables name="element" documentation="The semantic currently edited element."/>
+        <variables name="container" documentation="The semantic element corresponding to the view container."/>
+        <firstModelOperation xsi:type="tool_1:CreateInstance" typeName="dm::StringType" referenceName="dataTypes">
+          <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+        </firstModelOperation>
+      </ownedCreateLine>
+      <ownedCreateLine name="NumericType" label="Создать числовой тип">
+        <variables name="root" documentation="The semantic root element of the table."/>
+        <variables name="element" documentation="The semantic currently edited element."/>
+        <variables name="container" documentation="The semantic element corresponding to the view container."/>
+        <firstModelOperation xsi:type="tool_1:CreateInstance" typeName="dm::NumericType" referenceName="dataTypes">
+          <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+        </firstModelOperation>
+      </ownedCreateLine>
+      <ownedCreateLine name="DateType" label="Создать тип для даты">
+        <variables name="root" documentation="The semantic root element of the table."/>
+        <variables name="element" documentation="The semantic currently edited element."/>
+        <variables name="container" documentation="The semantic element corresponding to the view container."/>
+        <firstModelOperation xsi:type="tool_1:CreateInstance" typeName="dm::DateType" referenceName="dataTypes">
+          <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+        </firstModelOperation>
+      </ownedCreateLine>
+      <ownedCreateLine name="DateTimeType" label="Создать тип для даты и времени">
+        <variables name="root" documentation="The semantic root element of the table."/>
+        <variables name="element" documentation="The semantic currently edited element."/>
+        <variables name="container" documentation="The semantic element corresponding to the view container."/>
+        <firstModelOperation xsi:type="tool_1:CreateInstance" typeName="dm::DateTimeType" referenceName="dataTypes">
+          <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+        </firstModelOperation>
+      </ownedCreateLine>
+      <ownedCreateLine name="UuidType" label="Создать тип UUID">
+        <variables name="root" documentation="The semantic root element of the table."/>
+        <variables name="element" documentation="The semantic currently edited element."/>
+        <variables name="container" documentation="The semantic element corresponding to the view container."/>
+        <firstModelOperation xsi:type="tool_1:CreateInstance" typeName="dm::UuidType" referenceName="dataTypes">
+          <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+        </firstModelOperation>
+      </ownedCreateLine>
+      <ownedColumnMappings name="Name" headerLabelExpression="Название" featureName="name"/>
+      <ownedColumnMappings name="Description" headerLabelExpression="Описание" featureName="description"/>
+    </ownedRepresentations>
+    <ownedRepresentations xsi:type="description_2:EditionTableDescription" name="DataModelLocalization" domainClass="dm::DataModel">
+      <metamodel href="../../org.example.dm/model/dm.ecore#/"/>
+      <ownedLineMappings name="DataModel" domainClass="dm::DataModel" semanticCandidatesExpression="var:self">
+        <ownedSubLines name="Localization" domainClass="dm::Localization" semanticCandidatesExpression="feature:localizations"/>
+        <ownedSubLines name="Entity" domainClass="dm::Entity" semanticCandidatesExpression="feature:entities">
+          <ownedSubLines name="Localization" domainClass="dm::Localization" semanticCandidatesExpression="feature:localizations"/>
+          <ownedSubLines name="Attribute" domainClass="dm::Attribute" semanticCandidatesExpression="feature:attributes">
+            <ownedSubLines name="Localization" domainClass="dm::Localization" semanticCandidatesExpression="feature:localizations"/>
+          </ownedSubLines>
+        </ownedSubLines>
+        <ownedSubLines name="Relationship" domainClass="dm::Relationship" semanticCandidatesExpression="feature:relationships">
+          <ownedSubLines name="Localization" domainClass="dm::Localization" semanticCandidatesExpression="feature:localizations"/>
+          <ownedSubLines name="RelationshipEnd" domainClass="dm::RelationshipEnd" semanticCandidatesExpression="feature:ends">
+            <ownedSubLines name="Localization" domainClass="dm::Localization" semanticCandidatesExpression="feature:localizations"/>
+          </ownedSubLines>
+        </ownedSubLines>
+        <ownedSubLines name="DataType" domainClass="dm::DataType" semanticCandidatesExpression="feature:dataTypes">
+          <ownedSubLines name="Localization" domainClass="dm::Localization" semanticCandidatesExpression="feature:localizations"/>
+        </ownedSubLines>
+      </ownedLineMappings>
+      <ownedColumnMappings name="Name" headerLabelExpression="Название" featureName="name"/>
+      <ownedColumnMappings name="Description" headerLabelExpression="Описание" featureName="description"/>
+    </ownedRepresentations>
+    <ownedJavaExtensions qualifiedClassName="org.example.dm.design.Services"/>
+  </ownedViewpoints>
+  <extensions xsi:type="properties:ViewExtensionDescription" name="Properties">
+    <metamodels href="../../org.example.dm/model/dm.ecore#/"/>
+    <categories name="NamedElement">
+      <groups name="Localization Group" labelExpression="feature:locale" domainClass="dm::Localization" semanticCandidateExpression="feature:localizations">
+        <controls xsi:type="properties:TextDescription" name="Name" labelExpression="Название" valueExpression="feature:name">
+          <initialOperation>
+            <firstModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="var:newValue"/>
+          </initialOperation>
+        </controls>
+        <controls xsi:type="properties:TextAreaDescription" name="Description" labelExpression="Описание" lineCount="3" valueExpression="feature:description">
+          <initialOperation>
+            <firstModelOperations xsi:type="tool_1:SetValue" featureName="description" valueExpression="var:newValue"/>
+          </initialOperation>
+        </controls>
+      </groups>
+    </categories>
+    <categories name="DataModel">
+      <pages name="Default Page" labelExpression="Main" domainClass="dm::DataModel" semanticCandidateExpression="var:self" groups="//@extensions.0/@categories.1/@groups.0 //@extensions.0/@categories.0/@groups.0"/>
+      <groups name="Default Group" labelExpression="Group" domainClass="dm::DataModel" semanticCandidateExpression="var:self">
+        <controls xsi:type="properties:TextDescription" name="Name" labelExpression="Название" valueExpression="feature:name">
+          <initialOperation>
+            <firstModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="var:newValue"/>
+          </initialOperation>
+        </controls>
+        <controls xsi:type="properties:TextAreaDescription" name="Description" labelExpression="Описание" lineCount="3" valueExpression="feature:description">
+          <initialOperation>
+            <firstModelOperations xsi:type="tool_1:SetValue" featureName="description" valueExpression="var:newValue"/>
+          </initialOperation>
+        </controls>
+        <controls xsi:type="properties:TextDescription" name="Locales" labelExpression="Локали" valueExpression="aql:self.locales->sep(', ')->toString()">
+          <initialOperation>
+            <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:self.updateLocales(newValue)"/>
+          </initialOperation>
+        </controls>
+        <controls xsi:type="properties-ext-widgets-reference:ExtReferenceDescription" name="Entities" labelExpression="Сущности" referenceNameExpression="entities"/>
+        <style barStyle="NO_TITLE" toggleStyle="NONE"/>
+      </groups>
+    </categories>
+    <categories name="Entity">
+      <pages name="Default Page" labelExpression="Main" domainClass="dm::Entity" semanticCandidateExpression="var:self" groups="//@extensions.0/@categories.2/@groups.0 //@extensions.0/@categories.0/@groups.0"/>
+      <groups name="Default Group" labelExpression="Group" domainClass="dm::Entity" semanticCandidateExpression="var:self">
+        <controls xsi:type="properties:TextDescription" name="Name" labelExpression="Название" valueExpression="feature:name">
+          <initialOperation>
+            <firstModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="var:newValue"/>
+          </initialOperation>
+        </controls>
+        <controls xsi:type="properties:TextAreaDescription" name="Description" labelExpression="Описание" lineCount="3" valueExpression="feature:description">
+          <initialOperation>
+            <firstModelOperations xsi:type="tool_1:SetValue" featureName="description" valueExpression="var:newValue"/>
+          </initialOperation>
+        </controls>
+        <controls xsi:type="properties:RadioDescription" name="Kind" labelExpression="Тип" valueExpression="aql:dm::EntityKind.getEEnumLiteralByLiteral(self.kind.toString())" candidatesExpression="aql:dm::EntityKind.eLiterals" candidateDisplayExpression="aql:let details = candidate.eAnnotations->select(an | an.source = 'http://www.example.org/annotation').details in if details.key->includes('name')  then details->any(d | d.key = 'name').value else candidate.name endif" numberOfColumns="0">
+          <initialOperation>
+            <firstModelOperations xsi:type="tool_1:SetValue" featureName="kind" valueExpression="aql:newValue.instance"/>
+          </initialOperation>
+        </controls>
+        <controls xsi:type="properties-ext-widgets-reference:ExtReferenceDescription" name="Generals" labelExpression="Базовые сущности" referenceNameExpression="generals"/>
+        <controls xsi:type="properties-ext-widgets-reference:ExtReferenceDescription" name="Attributes" labelExpression="Атрибуты" referenceNameExpression="attributes"/>
+        <style barStyle="NO_TITLE" toggleStyle="NONE"/>
+      </groups>
+    </categories>
+    <categories name="Attribute">
+      <pages name="Default Page" labelExpression="Main" domainClass="dm::Attribute" semanticCandidateExpression="var:self" groups="//@extensions.0/@categories.3/@groups.0 //@extensions.0/@categories.0/@groups.0"/>
+      <groups name="Default Group" labelExpression="Group" domainClass="dm::Attribute" semanticCandidateExpression="var:self">
+        <controls xsi:type="properties:TextDescription" name="Name" labelExpression="Название" valueExpression="feature:name">
+          <initialOperation>
+            <firstModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="var:newValue"/>
+          </initialOperation>
+        </controls>
+        <controls xsi:type="properties:TextAreaDescription" name="Description" labelExpression="Описание" lineCount="3" valueExpression="feature:description">
+          <initialOperation>
+            <firstModelOperations xsi:type="tool_1:SetValue" featureName="description" valueExpression="var:newValue"/>
+          </initialOperation>
+        </controls>
+        <controls xsi:type="properties-ext-widgets-reference:ExtReferenceDescription" labelExpression="Тип данных" referenceNameExpression="dataType"/>
+        <controls xsi:type="properties:CheckboxDescription" name="Identity" labelExpression="Идентификатор" valueExpression="feature:identity">
+          <initialOperation>
+            <firstModelOperations xsi:type="tool_1:SetValue" featureName="identity" valueExpression="var:newValue"/>
+          </initialOperation>
+        </controls>
+        <controls xsi:type="properties:TextDescription" name="Lower" labelExpression="Мин." helpExpression="Минимально допустимое количество элементов для зафиксированного элемента на другом конце связи" valueExpression="feature:lower">
+          <initialOperation>
+            <firstModelOperations xsi:type="tool_1:SetValue" featureName="lower" valueExpression="var:newValue"/>
+          </initialOperation>
+        </controls>
+        <controls xsi:type="properties:TextDescription" name="Upper" labelExpression="Макс." helpExpression="Максимально допустимое количество элементов для зафиксированного элемента на другом конце связи" valueExpression="aql:if self.upper = -1 then '*' else self.upper endif">
+          <initialOperation>
+            <firstModelOperations xsi:type="tool_1:SetValue" featureName="upper" valueExpression="aql:if newValue = '*' then -1 else newValue endif"/>
+          </initialOperation>
+        </controls>
+        <style barStyle="NO_TITLE" toggleStyle="NONE"/>
+      </groups>
+    </categories>
+    <categories name="Relationship">
+      <pages name="Default Page" labelExpression="Main" domainClass="dm::Relationship" semanticCandidateExpression="var:self" groups="//@extensions.0/@categories.4/@groups.0 //@extensions.0/@categories.0/@groups.0">
+        <actions imageExpression="org.eclipse.sirius.ui/icons/full/others/add.gif">
+          <initialOperation>
+            <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:self">
+              <subModelOperations xsi:type="tool_1:CreateInstance" typeName="dm::RelationshipEnd" referenceName="ends">
+                <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:instance.updateLocalizations()"/>
+              </subModelOperations>
+            </firstModelOperations>
+          </initialOperation>
+        </actions>
+      </pages>
+      <pages name="End Page" labelExpression="aql:if self.name &lt;> null and self.name.size() > 0 then self.getLabel().toUpperFirst() else 'End ' + self.relationship.ends->indexOf(self) endif" domainClass="dm::RelationshipEnd" semanticCandidateExpression="feature:ends" preconditionExpression="aql:self.oclIsKindOf(dm::Relationship)" groups="//@extensions.0/@categories.5/@groups.0 //@extensions.0/@categories.0/@groups.0">
+        <actions imageExpression="org.eclipse.sirius.ui/icons/full/others/delete.gif">
+          <initialOperation>
+            <firstModelOperations xsi:type="tool_1:RemoveElement"/>
+          </initialOperation>
+        </actions>
+      </pages>
+      <groups name="Default Group" labelExpression="Group" domainClass="dm::Relationship" semanticCandidateExpression="var:self">
+        <controls xsi:type="properties:TextDescription" name="Name" labelExpression="Название" valueExpression="feature:name">
+          <initialOperation>
+            <firstModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="var:newValue"/>
+          </initialOperation>
+        </controls>
+        <controls xsi:type="properties:TextAreaDescription" name="Description" labelExpression="Описание" lineCount="3" valueExpression="feature:description">
+          <initialOperation>
+            <firstModelOperations xsi:type="tool_1:SetValue" featureName="description" valueExpression="var:newValue"/>
+          </initialOperation>
+        </controls>
+        <controls xsi:type="properties:RadioDescription" name="Kind" labelExpression="Тип" valueExpression="aql:dm::RelationshipKind.getEEnumLiteralByLiteral(self.kind.toString())" candidatesExpression="aql:dm::RelationshipKind.eLiterals" candidateDisplayExpression="aql:let details = candidate.eAnnotations->select(an | an.source = 'http://www.example.org/annotation').details in if details.key->includes('name')  then details->any(d | d.key = 'name').value else candidate.name endif" numberOfColumns="0">
+          <initialOperation>
+            <firstModelOperations xsi:type="tool_1:SetValue" featureName="kind" valueExpression="aql:newValue.instance"/>
+          </initialOperation>
+        </controls>
+        <style barStyle="NO_TITLE" toggleStyle="NONE"/>
+      </groups>
+    </categories>
+    <categories name="RelationshipEnd">
+      <pages name="Default Page" labelExpression="Main" domainClass="dm::RelationshipEnd" semanticCandidateExpression="var:self" groups="//@extensions.0/@categories.5/@groups.0 //@extensions.0/@categories.0/@groups.0"/>
+      <groups name="Default Group" labelExpression="Group" domainClass="dm::RelationshipEnd" semanticCandidateExpression="var:self">
+        <controls xsi:type="properties:TextDescription" name="Name" labelExpression="Название" valueExpression="feature:name">
+          <initialOperation>
+            <firstModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="var:newValue"/>
+          </initialOperation>
+        </controls>
+        <controls xsi:type="properties:TextAreaDescription" name="Description" labelExpression="Описание" lineCount="3" valueExpression="feature:description">
+          <initialOperation>
+            <firstModelOperations xsi:type="tool_1:SetValue" featureName="description" valueExpression="var:newValue"/>
+          </initialOperation>
+        </controls>
+        <controls xsi:type="properties-ext-widgets-reference:ExtReferenceDescription" name="Entity" labelExpression="Сущность" referenceNameExpression="entity"/>
+        <controls xsi:type="properties:TextDescription" name="Lower" labelExpression="Мин." helpExpression="Минимально допустимое количество элементов для зафиксированного элемента на другом конце связи" valueExpression="feature:lower">
+          <initialOperation>
+            <firstModelOperations xsi:type="tool_1:SetValue" featureName="lower" valueExpression="var:newValue"/>
+          </initialOperation>
+        </controls>
+        <controls xsi:type="properties:TextDescription" name="Upper" labelExpression="Макс." helpExpression="Максимально допустимое количество элементов для зафиксированного элемента на другом конце связи" valueExpression="aql:if self.upper = -1 then '*' else self.upper endif">
+          <initialOperation>
+            <firstModelOperations xsi:type="tool_1:SetValue" featureName="upper" valueExpression="aql:if newValue = '*' then -1 else newValue endif"/>
+          </initialOperation>
+        </controls>
+        <style barStyle="NO_TITLE" toggleStyle="NONE"/>
+      </groups>
+    </categories>
+  </extensions>
+</description:Group>

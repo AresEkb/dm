@@ -1,0 +1,180 @@
+import StringHelpers;
+import DmHelpers;
+
+modeltype DM uses 'http://www.example.org/dm';
+modeltype RDM uses 'http://www.example.org/rdm';
+
+transformation DmToRdm(in dm : DM, out rdm : RDM);
+
+main()
+{
+    dm.rootObjects()[DM::DataModel]->toSchema();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Data model
+
+mapping DM::DataModel::toSchema() : RDM::Schema
+{
+    name := self.getSchemaName();
+    tables := self.entities->toTable();
+    tables += self.relationships->toTable();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Entities and attributes
+
+mapping DM::Entity::toTable() : RDM::Table
+when { self.kind <> DM::EntityKind::ATTRIBUTE_SET }
+{
+    name := self.getTableName();
+
+	primaryKey := self.xmap toPrimaryKey();
+	columns := primaryKey.columns;
+
+	columns += self.getActualAttributes()->toColumn(self);
+
+	foreignKeys := self.dataModel.relationships
+		->select(rel | rel.isManyToOne() and rel.ends->at(1).entity = self)
+		->collect(rel | rel.ends->at(2))
+		->toForeignKey(self);
+	foreignKeys += self.dataModel.relationships
+		->select(rel | rel.isOneToAny() and rel.ends->at(2).entity = self)
+		->collect(rel | rel.ends->at(1))
+		->toForeignKey(self);
+	columns += foreignKeys.columns;
+
+	var parents := self.generals->select(general | general.kind <> DM::EntityKind::ATTRIBUTE_SET);
+	assert fatal (parents->size() <= 1) with log('Expected at most one parent entity');
+	foreignKeys += parents->collect(parent | object RDM::ForeignKey {
+		name := parent->asOrderedSet()->getForeignKeyName();
+		columns := primaryKey.columns;
+		referencedKey := parent.xmap toPrimaryKey();
+	});
+
+	constraints := self.getActualAttributes()->collect(attr | attr.dataType.map toConstraint(attr));
+}
+
+mapping DM::Attribute::toColumn(entity : DM::Entity) : RDM::Column
+{
+    name := self.getColumnName();
+    dataType := self.dataType.getSqlType();
+    nullable := self.lower = 0;
+    assert fatal (self.upper = 1) with log('Only upper multiplicity 1 is supported for attributes');
+}
+
+mapping DM::DataType::toConstraint(attribute : DM::Attribute) : RDM::Constraint
+when { false }
+{
+}
+
+mapping DM::StringType::toConstraint(attribute : DM::Attribute) : RDM::Constraint
+when { self.minLength <> null or self.pattern <> null }
+{
+	name := attribute.getConstraintName();
+	var expressions : List(String);
+	if (self.minLength <> null) {
+		expressions += 'LENGTH(' + attribute.getColumnName() + ') >= ' + self.minLength.toString();
+	};
+	if (notEmpty(self.pattern)) {
+		expressions += attribute.getColumnName() + ' ~ \'^' + self.pattern + '$\'';
+	};
+	expression := expressions->sep(' AND ');
+}
+
+mapping DM::NumericType::toConstraint(attribute : DM::Attribute) : RDM::Constraint
+when {
+	self.minInclusive <> null or self.minExclusive <> null or
+	self.maxInclusive <> null or self.maxExclusive <> null
+}
+{
+	name := attribute.getConstraintName();
+	var expressions : List(String);
+	if (self.minInclusive <> null) {
+		expressions += attribute.getColumnName() + ' >= ' + self.minInclusive.toString(self.fractionDigits = 0);
+	};
+	if (self.minExclusive <> null) {
+		expressions += attribute.getColumnName() + ' > ' + self.minExclusive.toString(self.fractionDigits = 0);
+	};
+	if (self.maxInclusive <> null) {
+		expressions += attribute.getColumnName() + ' <= ' + self.maxInclusive.toString(self.fractionDigits = 0);
+	};
+	if (self.maxExclusive <> null) {
+		expressions += attribute.getColumnName() + ' < ' + self.maxExclusive.toString(self.fractionDigits = 0);
+	};
+	expression := expressions->sep(' AND ');
+}
+
+mapping DM::Entity::toPrimaryKey() : RDM::PrimaryKey
+{
+	name := self.getPrimaryKeyName();
+	columns := self.getIdentityAttributes()->toColumn(self);
+	assert fatal (columns->notEmpty()) with log('Not found an identity column for ' + self.name);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// N-ary and many-to-many relationships
+
+mapping DM::Relationship::toTable() : RDM::Table
+when { self.isNary() or self.isManyToMany() }
+{
+    name := self.getTableName();
+    assert fatal (notBlank(name)) with log('An N-ary relationship (' + self.ends.entity.name->sep(', ') + ') should have name');
+
+    primaryKey := self.xmap toPrimaryKey();
+    columns := primaryKey.columns;
+
+	foreignKeys := self.ends->toForeignKey(self);
+}
+
+mapping DM::RelationshipEnd::toColumn(owner : DM::NamedElement) : RDM::Column
+{
+    name := self.getColumnName();
+    dataType := self.entity.xmap toPrimaryKey().columns->at(1).dataType;
+}
+
+mapping DM::Relationship::toPrimaryKey() : RDM::PrimaryKey
+{
+	name := self.getPrimaryKeyName();
+	columns := self.ends->toColumn(self);
+}
+
+mapping DM::RelationshipEnd::toForeignKey(owner : DM::NamedElement) : RDM::ForeignKey
+{
+	name := self->asOrderedSet()->getForeignKeyName();
+	columns := self->toColumn(owner);
+	referencedKey := self.entity.late resolveone(RDM::PrimaryKey);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Data types
+
+query DM::DataType::getSqlType() : String {
+	assert fatal (false) with log('Not implemented for ' + self.metaClassName());
+	return null;
+}
+
+query DM::BooleanType::getSqlType() : String = 'BOOLEAN';
+
+query DM::StringType::getSqlType() : String = switch {
+	case (self.length <> null) 'VARCHAR(' + self.length.toString() + ')';
+	case (self.maxLength <> null) 'VARCHAR(' + self.maxLength.toString() + ')';
+	else 'TEXT';
+};
+
+query DM::NumericType::getSqlType() : String = switch {
+	case (self.fractionDigits = 0 and self.size <= 2) 'SMALLINT';
+	case (self.fractionDigits = 0 and self.size <= 4) 'INTEGER';
+	case (self.fractionDigits = 0 and self.size <= 8) 'BIGINT';
+	case (self.fractionDigits = 0 and self.totalDigits <> null) 'NUMERIC(' + self.totalDigits.toString() + ')';
+	case (self.fractionDigits = null and self.size <= 4) 'REAL';
+	case (self.fractionDigits = null and self.size <= 8) 'DOUBLE PRECISION';
+	case (self.fractionDigits > 0 and self.totalDigits > 0) 'NUMERIC(' + self.totalDigits.toString() + ', ' + self.fractionDigits.toString() + ')';
+	else 'NUMERIC';
+};
+
+query DM::DateType::getSqlType() : String = 'DATE';
+
+query DM::DateTimeType::getSqlType() : String = 'TIMESTAMP WITH TIME ZONE';
+
+query DM::UuidType::getSqlType() : String = 'UUID';

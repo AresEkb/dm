@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated rdm -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="org.example.rdm.presentation.RdmModelWizardID"
+            name="%_UI_RdmModelWizard_label"
+            class="org.example.rdm.presentation.RdmModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/RdmModelFile.gif">
+         <description>%_UI_RdmModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated rdm -->
+      <editor
+            id="org.example.rdm.presentation.RdmEditorID"
+            name="%_UI_RdmEditor_label"
+            icon="icons/full/obj16/RdmModelFile.gif"
+            extensions="rdm"
+            class="org.example.rdm.presentation.RdmEditor"
+            contributorClass="org.example.rdm.presentation.RdmActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>
